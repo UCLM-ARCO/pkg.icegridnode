@@ -33,13 +33,13 @@ SCRIPTNAME=/etc/init.d/$NAME
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
 
-#VERBOSE=1
-
 # Define LSB log_* functions.
 # Depend on lsb-base (>= 3.2-14) to ensure that this file is present
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
+
+ADMIN_ARGS="--Ice.Config=/etc/icegrid/node.config -u $IG_USER -p $IG_PASS"
 
 check_enabled() {
     if [ $START_ICEGRIDNODE -ne 1 ]; then
@@ -67,9 +67,9 @@ do_start()
 	# on this one.  As a last resort, sleep for some time.
 }
 
-check_registry() 
+check_registry()
 {
-    /usr/bin/icegridadmin --Ice.Config=/etc/icegrid/node.config -u $IG_USER -p $IG_PASS -e "registry list" 2> /dev/null > /dev/null
+    icegridadmin $ADMIN_ARGS -e "registry list" 2> /dev/null > /dev/null
     RETVAL="$?"
     if [ "$RETVAL" != 0 ]; then
 	log_warning_msg "couldn't reach the IceGrid registry right now"
@@ -79,7 +79,7 @@ check_registry()
 shutdown_node()
 {
     nodename=$(grep IceGrid.Node.Name /etc/icegrid/node.config | cut -d= -f2)
-    icegridadmin --Ice.Config=/etc/icegrid/node.config -u $IG_USER -p $IG_PASS -e "node shutdown $nodename"
+    icegridadmin $ADMIN_ARGS -e "node shutdown $nodename"
 }
 
 #
@@ -97,9 +97,10 @@ do_stop()
 	RETVAL="$?"
 	[ "$RETVAL" = 0 ] && return 0
 
-#	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
-#	RETVAL="$?"
-#	[ "$RETVAL" = 2 ] && return 2
+	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
+	RETVAL="$?"
+	[ "$RETVAL" = 2 ] && return 2
+
 	# Wait for children to finish too if this is a daemon that forks
 	# and if the daemon is only ever run from this initscript.
 	# If the above conditions are not satisfied then add some other code
