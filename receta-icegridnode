@@ -1,0 +1,3 @@
+/etc/icegrid/node.config
+/var/lib/icegrid/node.db
+/etc/default/icegridnode
