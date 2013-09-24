@@ -1,0 +1,2 @@
+var/lib/icegrid/node.db
+var/lib/icegrid/registry.db

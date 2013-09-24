@@ -1,0 +1,15 @@
+Source: icegridnode
+Section: utils
+Priority: extra
+Maintainer: Arco Group <arco.uclm@gmail.com>
+Uploaders: Oscar Aceña Herrera <oscaracena@gmail.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://bitbucket.org/arco_group/icegridnode
+
+Package: icegridnode
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: init script for launching IceGrid Node daemon
+ This package contains the files and scripts needed for
+ launching IceGrid Node daemon

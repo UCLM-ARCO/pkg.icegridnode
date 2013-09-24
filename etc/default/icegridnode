@@ -1,9 +1,0 @@
-# /etc/default/icegridnode
-
-# start icegridnode at init (1) or not (other)
-# Please edit /etc/icegrid/node.config before enabling
-START_ICEGRIDNODE=1
-
-# IceGrid Registry credentials
-IG_USER="user"
-IG_PASS="pass"

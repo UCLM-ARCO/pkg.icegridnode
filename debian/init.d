@@ -44,7 +44,7 @@ ADMIN_ARGS="--Ice.Config=/etc/icegrid/node.config -u $IG_USER -p $IG_PASS"
 assert_enabled() {
     if [ $START_ICEGRIDNODE -ne 1 ]; then
         log_warning_msg "$NAME disabled: not starting. To enable it edit $DEFAULTS_FILE"
-        exit 1
+        exit 0
     fi
 }
 
