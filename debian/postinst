@@ -21,6 +21,11 @@ set -e
 case "$1" in
     configure)
 	sed -i "s/HOSTNAME/$(hostname)/g" /etc/icegridnode.conf
+
+	# hack to uncompress templates.xml.gz
+	if [  -e /usr/share/doc/ice35-services/config/templates.xml.gz ]; then
+	    gunzip -cd /usr/share/doc/ice35-services/config/templates.xml.gz > /usr/share/doc/ice35-services/config/templates.xml
+	fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
