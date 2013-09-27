@@ -29,7 +29,7 @@ case "$1" in
 
 	adduser --disabled-password --quiet --system --home /var/lib/ice/icegrid --no-create-home --gecos "IceGrid daemon" --group icegrid
 
-	chown icegrid.icegrid -R /var/lib/ice
+	chown icegrid:icegrid -R /var/lib/ice
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
