@@ -26,6 +26,10 @@ case "$1" in
 	if [  -e /usr/share/doc/ice35-services/config/templates.xml.gz ]; then
 	    gunzip -cd /usr/share/doc/ice35-services/config/templates.xml.gz > /usr/share/doc/ice35-services/config/templates.xml
 	fi
+
+	adduser --disabled-password --quiet --system --home /var/lib/ice/icegrid --no-create-home --gecos "IceGrid daemon" --group icegrid
+
+	chown icegrid.icegrid -R /var/lib/ice
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
