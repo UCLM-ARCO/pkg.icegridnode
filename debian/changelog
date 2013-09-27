@@ -1,6 +1,6 @@
 icegridnode (0.20130927.2-1) unstable; urgency=low
 
-  * New release
+  * /etc/icegrid/node.config -> /etc/icegridnode.conf (zeroc way)
 
  -- David Villa Alises <David.Villa@gmail.com>  Fri, 27 Sep 2013 19:27:23 +0200
 
