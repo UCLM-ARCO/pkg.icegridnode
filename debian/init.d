@@ -21,7 +21,7 @@ NAME=icegridnode
 DAEMON=/usr/bin/$NAME
 PIDFILE=/var/run/$NAME.pid
 DEFAULTS_FILE=/etc/default/$NAME
-DAEMON_ARGS="--Ice.Config=/etc/icegrid/node.config --daemon --pidfile $PIDFILE"
+DAEMON_ARGS="--Ice.Config=/etc/icegridnode.conf --daemon --pidfile $PIDFILE"
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
@@ -39,7 +39,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 . /lib/lsb/init-functions
 
 
-ADMIN_ARGS="--Ice.Config=/etc/icegrid/node.config -u $IG_USER -p $IG_PASS"
+ADMIN_ARGS="--Ice.Config=/etc/icegridnode.conf -u $IG_USER -p $IG_PASS"
 
 assert_enabled() {
     if [ $START_ICEGRIDNODE -ne 1 ]; then
@@ -69,7 +69,7 @@ do_start()
 
 this_node_is_registry()
 {
-    grep "IceGrid.Node.CollocateRegistry=1" /etc/icegrid/node.config > /dev/null
+    grep "IceGrid.Node.CollocateRegistry=1" /etc/icegridnode.conf > /dev/null
 }
 
 registry_online()
@@ -90,7 +90,7 @@ check_registry()
 
 shutdown_node()
 {
-    nodename=$(grep IceGrid.Node.Name /etc/icegrid/node.config | cut -d= -f2)
+    nodename=$(grep IceGrid.Node.Name /etc/icegridnode.conf | cut -d= -f2)
     icegridadmin $ADMIN_ARGS -e "node shutdown $nodename" 2> /dev/null
 }
 

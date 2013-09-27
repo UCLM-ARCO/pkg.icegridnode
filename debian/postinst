@@ -20,7 +20,7 @@ set -e
 
 case "$1" in
     configure)
-	sed -i "s/HOSTNAME/$(hostname)/g" /etc/icegrid/node.config
+	sed -i "s/HOSTNAME/$(hostname)/g" /etc/icegridnode.conf
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

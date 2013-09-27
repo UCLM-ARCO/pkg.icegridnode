@@ -2,7 +2,8 @@ Source: icegridnode
 Section: utils
 Priority: extra
 Maintainer: Arco Group <arco.uclm@gmail.com>
-Uploaders: Oscar Aceña Herrera <oscaracena@gmail.com>
+Uploaders: Oscar Aceña Herrera <oscaracena@gmail.com>,
+           David Villa Alises <David.Villa@gmail.com>
 Build-Depends: debhelper (>= 8.0.0)
 Standards-Version: 3.9.4
 Homepage: https://bitbucket.org/arco_group/icegridnode

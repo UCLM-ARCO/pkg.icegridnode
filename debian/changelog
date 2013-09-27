@@ -1,3 +1,16 @@
+icegridnode (0.20130927-1) unstable; urgency=low
+
+  * New release
+  * Using same paths than the zeroc icegrid package
+
+ -- David Villa Alises <David.Villa@gmail.com>  Fri, 27 Sep 2013 11:48:13 +0200
+
+icegridnode (0.20130924.1-1) unstable; urgency=low
+
+  * Commented Registry configuration
+
+ -- David Villa Alises <David.Villa@gmail.com>  Tue, 24 Sep 2013 15:32:23 +0200
+
 icegridnode (0.20130924-1) unstable; urgency=low
 
   * Initial release

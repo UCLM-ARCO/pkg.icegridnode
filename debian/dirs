@@ -1,2 +1,2 @@
-var/lib/icegrid/node.db
-var/lib/icegrid/registry.db
+var/lib/ice/icegrid/node1
+var/lib/ice/icegrid/registry
