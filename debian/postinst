@@ -17,19 +17,30 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+ICE_USER=ice
 
 case "$1" in
     configure)
 	sed -i "s/HOSTNAME/$(hostname)/g" /etc/icegridnode.conf
 
-	# hack to uncompress templates.xml.gz
+	# hack to uncompress templates.xml.gz (ice35-services debian package)
 	if [  -e /usr/share/doc/ice35-services/config/templates.xml.gz ]; then
 	    gunzip -cd /usr/share/doc/ice35-services/config/templates.xml.gz > /usr/share/doc/ice35-services/config/templates.xml
 	fi
 
-	adduser --disabled-password --quiet --system --home /var/lib/ice/icegrid --no-create-home --gecos "IceGrid daemon" --group icegrid
+	if ! getent passwd | grep -q "^$ICE_USER:"; then
+	    echo -n "Adding system user $ICE_USER.."
+	    adduser --quiet --system --no-create-home \
+		--home /var/lib/ice \
+		--gecos "IceGrid daemon" \
+		--disabled-password \
+		--group $ICE_USER 2>/dev/null || true
+	    echo "..done"
+	fi
 
-	chown icegrid:icegrid -R /var/lib/ice
+	chown -R $ICE_USER:adm /var/lib/ice
+	chmod -R u=rwx,g=rxs,o= /var/lib/ice
+
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
