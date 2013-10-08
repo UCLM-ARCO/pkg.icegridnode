@@ -19,7 +19,7 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="ZeroC IceGrid node daemon"
 NAME=icegridnode
 DAEMON=/usr/bin/$NAME
-PIDFILE=/var/run/$NAME.pid
+PIDFILE=/var/tmp/$NAME.pid
 DEFAULTS_FILE=/etc/default/$NAME
 DAEMON_ARGS="--Ice.Config=/etc/icegridnode.conf --daemon --pidfile $PIDFILE"
 SCRIPTNAME=/etc/init.d/$NAME
