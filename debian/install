@@ -1,1 +1,2 @@
 etc/icegridnode.conf etc/
+get-locator-host.py  /usr/lib/icegridnode/

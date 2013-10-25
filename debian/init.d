@@ -21,7 +21,8 @@ NAME=icegridnode
 DAEMON=/usr/bin/$NAME
 PIDFILE=/var/tmp/$NAME.pid
 DEFAULTS_FILE=/etc/default/$NAME
-DAEMON_ARGS="--Ice.Config=/etc/icegridnode.conf --daemon --pidfile $PIDFILE"
+NODE_CONF="/etc/icegridnode.conf"
+DAEMON_ARGS="--Ice.Config=$NODE_CONF --daemon --pidfile $PIDFILE"
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
@@ -33,13 +34,15 @@ SCRIPTNAME=/etc/init.d/$NAME
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
 
+VERBOSE=1
+
 # Define LSB log_* functions.
 # Depend on lsb-base (>= 3.2-14) to ensure that this file is present
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
 
-ADMIN_ARGS="--Ice.Config=/etc/icegridnode.conf -u $IG_USER -p $IG_PASS"
+ADMIN_ARGS="--Ice.Config=$NODE_CONF -u $IG_USER -p $IG_PASS"
 
 assert_enabled() {
     if [ $START_ICEGRIDNODE -ne 1 ]; then
@@ -67,9 +70,10 @@ do_start()
 	# on this one.  As a last resort, sleep for some time.
 }
 
+# FIXME: this line would have spaces around =
 this_node_is_registry()
 {
-    grep "IceGrid.Node.CollocateRegistry=1" /etc/icegridnode.conf > /dev/null
+    grep "^IceGrid.Node.CollocateRegistry=1" $NODE_CONF > /dev/null
 }
 
 registry_online()
@@ -77,10 +81,21 @@ registry_online()
     icegridadmin $ADMIN_ARGS -e "registry list" 2> /dev/null > /dev/null
 }
 
+registry_host_resolved() 
+{
+    host=$(python /usr/lib/icegridnode/get-locator-host.py --Ice.Config=$NODE_CONF)
+    ping -c1 $host 2>&1 | grep -v "unknown host"  2> /dev/null > /dev/null
+}
+
 check_registry()
 {
     if this_node_is_registry; then
 	return 0
+    fi
+
+    if ! registry_host_resolved; then
+	log_warning_msg "registry hostname is unknown right now, not starting"
+	exit 0
     fi
 
     if ! registry_online; then
@@ -147,12 +162,12 @@ do_reload() {
 case "$1" in
   start)
 	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+        check_registry
 	do_start
 	case "$?" in
 		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
 		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
 	esac
-        check_registry
 	;;
   stop)
 	[ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
@@ -183,13 +198,13 @@ case "$1" in
 	do_stop
 	case "$?" in
 	  0|1)
+                check_registry
 		do_start
 		case "$?" in
 			0) log_end_msg 0 ;;
 			1) log_end_msg 1 ;; # Old process is still running
 			*) log_end_msg 1 ;; # Failed to start
 		esac
-                check_registry
 		;;
 	  *)
 		# Failed to stop
