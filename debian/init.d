@@ -63,6 +63,8 @@ do_start()
 
         assert_enabled
 
+        check_registry
+
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- $DAEMON_ARGS || return 2
 	# Add code here, if necessary, that waits for the process to be ready
@@ -81,7 +83,7 @@ registry_online()
     icegridadmin $ADMIN_ARGS -e "registry list" 2> /dev/null > /dev/null
 }
 
-registry_host_resolved() 
+registry_host_resolved()
 {
     host=$(python /usr/lib/icegridnode/get-locator-host.py --Ice.Config=$NODE_CONF)
     ping -c1 $host 2>&1 | grep -v "unknown host"  2> /dev/null > /dev/null
@@ -162,7 +164,6 @@ do_reload() {
 case "$1" in
   start)
 	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
-        check_registry
 	do_start
 	case "$?" in
 		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
@@ -198,7 +199,6 @@ case "$1" in
 	do_stop
 	case "$?" in
 	  0|1)
-                check_registry
 		do_start
 		case "$?" in
 			0) log_end_msg 0 ;;
