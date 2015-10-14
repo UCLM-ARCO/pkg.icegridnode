@@ -4,13 +4,14 @@ Priority: extra
 Maintainer: Arco Group <arco.uclm@gmail.com>
 Uploaders: Oscar Aceña Herrera <oscaracena@gmail.com>,
            David Villa Alises <David.Villa@gmail.com>
-Build-Depends: debhelper (>= 8.0.0)
-Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 8.0.0), python
+Standards-Version: 3.9.6
 Homepage: https://bitbucket.org/arco_group/icegridnode
 
 Package: icegridnode
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ice35-services
+Depends: ${shlibs:Depends}, ${misc:Depends}, ice35-services,
+ python-zeroc-ice, python
 Description: init script for launching IceGrid Node daemon
  This package contains the files and scripts needed for
  launching IceGrid Node daemon
