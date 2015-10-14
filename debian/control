@@ -10,7 +10,7 @@ Homepage: https://bitbucket.org/arco_group/icegridnode
 
 Package: icegridnode
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, ice35-services
 Description: init script for launching IceGrid Node daemon
  This package contains the files and scripts needed for
  launching IceGrid Node daemon
