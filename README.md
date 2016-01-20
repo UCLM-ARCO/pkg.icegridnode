@@ -1,0 +1,1 @@
+Init script for ZeroC Ice icegridnode < 3.6
