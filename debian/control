@@ -6,7 +6,7 @@ Uploaders: Oscar Aceña Herrera <oscaracena@gmail.com>,
            David Villa Alises <David.Villa@gmail.com>
 Build-Depends: debhelper (>= 8.0.0), python
 Standards-Version: 3.9.6
-Homepage: https://bitbucket.org/arco_group/icegridnode
+Homepage: https://bitbucket.org/arco_group/pkg.icegridnode
 
 Package: icegridnode
 Architecture: all
